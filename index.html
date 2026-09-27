@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medical Weight Loss | Keevo</title>
+  <meta name="description" content="See what clinician-backed medical weight loss options may suit your needs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>LOOKING FOR MEDICAL WEIGHT LOSS?</h1>
+      <p class="terms">T+C's Apply</p>
+      <p class="subhead">See what clinician-backed medical weight loss options may suit your needs.</p>
+    </header>
+
+    <section class="card" aria-live="polite">
+      <form id="survey" novalidate>
+        <div class="progress-meta"><span id="step-label">STEP 1 OF 4</span></div>
+        <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+
+        <fieldset class="step active" data-step="1">
+          <legend>Are you looking to lose weight?</legend>
+          <button type="button" class="option" data-name="looking" data-value="Yes">Yes</button>
+          <button type="button" class="option" data-name="looking" data-value="No">No</button>
+        </fieldset>
+
+        <fieldset class="step" data-step="2">
+          <legend>How much weight would you like to lose?</legend>
+          <button type="button" class="option" data-name="goal" data-value="Under 10kg">Under 10kg</button>
+          <button type="button" class="option" data-name="goal" data-value="10–20kg">10–20kg</button>
+          <button type="button" class="option" data-name="goal" data-value="20–30kg">20–30kg</button>
+          <button type="button" class="option" data-name="goal" data-value="30kg+">30kg+</button>
+        </fieldset>
+
+        <fieldset class="step" data-step="3">
+          <legend>Have you tried to lose weight before?</legend>
+          <button type="button" class="option" data-name="tried" data-value="Yes, diet &amp; exercise">Yes, diet &amp; exercise</button>
+          <button type="button" class="option" data-name="tried" data-value="Yes, medication">Yes, medication</button>
+          <button type="button" class="option" data-name="tried" data-value="No, this is my first time">No, this is my first time</button>
+        </fieldset>
+
+        <fieldset class="step" data-step="4">
+          <legend>Where should we send your options?</legend>
+          <label>First name<input type="text" name="firstName" autocomplete="given-name" required></label>
+          <label>Email<input type="email" name="email" autocomplete="email" required></label>
+          <label>Mobile<input type="tel" name="phone" autocomplete="tel" required></label>
+          <p class="error" id="form-error" hidden>Please fill in all fields with valid details.</p>
+          <button type="submit" class="submit">See my options</button>
+          <button type="button" class="back">Back</button>
+        </fieldset>
+
+        <div class="step" data-step="done">
+          <h2>Thanks! You're all set.</h2>
+          <p>A member of our team will be in touch shortly to talk through your options.</p>
+        </div>
+
+        <div class="step" data-step="ineligible">
+          <h2>Thanks for your interest.</h2>
+          <p>This program is designed for people looking to lose weight. If that changes, come back any time.</p>
+          <button type="button" class="back" data-restart>Start again</button>
+        </div>
+      </form>
+    </section>
+
+    <p class="reassure">Takes less than 60 seconds. No obligation.</p>
+    <footer>&copy; <span id="year"></span> Keevo. All Rights Reserved.</footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
