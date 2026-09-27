@@ -123,16 +123,17 @@
       <div class="options" role="group">
         ${q.options.map(([text, key]) => `
           <button type="button" class="option" data-name="${q.name}" data-value="${escapeHtml(text)}" aria-pressed="false">
-            ${icon(key)}<span>${escapeHtml(text)}</span>
+            <span class="icon-wrap">${icon(key)}</span><span class="label">${escapeHtml(text)}</span>
           </button>`).join('')}
       </div>
-      <button type="button" class="next" data-continue disabled>Continue &rarr;</button>
       ${i > 0 ? '<button type="button" class="back">&larr; Back</button>' : ''}
     </div>`).join('');
 
   const steps = document.querySelectorAll('.quiz .step');
   const order = [...QUESTIONS.map((_, i) => String(i + 1)), 'contact', 'done'];
+  const quiz = document.querySelector('.quiz');
   let current = 0;
+  let advancing = false;
 
   function show(index) {
     current = index;
@@ -148,24 +149,26 @@
     }
   }
 
-  document.querySelector('.quiz').addEventListener('click', (e) => {
+  quiz.addEventListener('click', (e) => {
     const option = e.target.closest('.option');
     if (option) {
+      if (advancing) return;
       const step = option.closest('.step');
       step.querySelectorAll('.option').forEach((o) => o.setAttribute('aria-pressed', 'false'));
       option.setAttribute('aria-pressed', 'true');
       answers[option.dataset.name] = option.dataset.value;
-      step.querySelector('[data-continue]').disabled = false;
+
+      // Brief pause so the selected state registers before moving on.
+      advancing = true;
+      setTimeout(() => {
+        advancing = false;
+        show(current + 1);
+        if (quiz.getBoundingClientRect().top < 0) quiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 350);
       return;
     }
 
-    if (e.target.closest('[data-continue]')) {
-      show(current + 1);
-      document.querySelector('.quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      return;
-    }
-
-    if (e.target.closest('.back')) show(current - 1);
+    if (e.target.closest('.back') && !advancing) show(current - 1);
   });
 
   leadForm.addEventListener('submit', (e) => {
