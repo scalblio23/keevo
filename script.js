@@ -1,5 +1,5 @@
 (function () {
-  // Hand-drawn style icons: `fill` is the offset yellow highlight, `stroke` is the navy line art.
+  // Line icons: `fill` is the offset soft highlight, `stroke` is the line art (colours set in styles.css).
   const ICONS = {
     scale: {
       fill: '<rect x="18" y="22" width="60" height="56" rx="10"/>',
@@ -107,8 +107,8 @@
   function icon(key) {
     const { fill, stroke } = ICONS[key];
     return `<svg viewBox="0 0 100 100" aria-hidden="true">
-      <g transform="translate(5 5)" fill="#f2e394" stroke="none">${fill}</g>
-      <g fill="none" stroke="#13123d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">${stroke}</g>
+      <g class="ic-fill" transform="translate(4 4)">${fill}</g>
+      <g class="ic-line">${stroke}</g>
     </svg>`;
   }
 
