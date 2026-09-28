@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medical Weight Loss | Keevo</title>
+  <meta name="description" content="See what clinician-backed medical weight loss options may suit your needs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --bg: #f4f8f8;
+  --text: #16333a;
+  --muted: #5b7378;
+  --faint: #9fb2b5;
+  --card: #ffffff;
+  --border: #e1eaea;
+  --teal: #14a098;
+  --teal-dark: #0d7f78;
+  --teal-soft: #e3f4f2;
+  --teal-tint: #c4e8e4;
+}
+
+html, body { margin: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 56px 16px 40px;
+  text-align: center;
+}
+
+/* Hero */
+.hero h1 {
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.terms {
+  color: var(--faint);
+  font-size: 0.85rem;
+  margin: 14px 0 0;
+}
+
+.subhead {
+  color: var(--muted);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  max-width: 560px;
+  margin: 20px auto 0;
+}
+
+/* Quiz */
+.quiz { margin-top: 44px; }
+
+.progress {
+  max-width: 320px;
+  margin: 0 auto 28px;
+  color: var(--teal-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.progress-track {
+  height: 4px;
+  background: #e2ebeb;
+  border-radius: 999px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: var(--teal);
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+.step { display: none; margin: 0; }
+.step.active { display: block; }
+
+.step h2 {
+  font-size: clamp(1.3rem, 3.4vw, 1.75rem);
+  font-weight: 400;
+  line-height: 1.3;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.step h2 strong { font-weight: 600; }
+
+.hint {
+  color: var(--muted);
+  font-size: 0.98rem;
+  margin: 10px 0 26px;
+}
+
+/* Image option cards */
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.option {
+  position: relative;
+  flex: 0 1 calc((100% - 24px) / 3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  padding: 18px 10px 16px;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(22, 51, 58, 0.04), 0 4px 14px rgba(22, 51, 58, 0.04);
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.icon-wrap {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #eaf8f6 0%, #d3efeb 100%);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.option svg { width: 30px; height: 30px; }
+.ic-fill { fill: #ffffff; stroke: none; opacity: 0.85; }
+.ic-line { fill: none; stroke: var(--teal-dark); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s ease; }
+
+.option:hover {
+  border-color: var(--teal-tint);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(22, 51, 58, 0.04), 0 10px 24px rgba(20, 160, 152, 0.1);
+}
+.option:hover .icon-wrap { transform: scale(1.06); }
+.option:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+.option[aria-pressed="true"] {
+  border-color: var(--teal);
+  background: linear-gradient(180deg, #ffffff 0%, #f0faf8 100%);
+  box-shadow: 0 0 0 3px var(--teal-soft), 0 10px 24px rgba(20, 160, 152, 0.12);
+}
+.option[aria-pressed="true"] .icon-wrap { background: linear-gradient(145deg, var(--teal) 0%, var(--teal-dark) 100%); }
+.option[aria-pressed="true"] .ic-line { stroke: #ffffff; }
+.option[aria-pressed="true"] .ic-fill { fill: #ffffff; opacity: 0.2; }
+
+/* Tick badge on the selected card */
+.option::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 12px no-repeat;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.option[aria-pressed="true"]::after { opacity: 1; transform: scale(1); }
+
+/* Buttons */
+.next {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 28px auto 0;
+  background: var(--teal);
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 24px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(20, 160, 152, 0.22);
+  transition: background 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+}
+
+.next:hover:not(:disabled) { background: var(--teal-dark); }
+
+.back {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 14px 8px 0;
+}
+
+.back:hover { color: var(--teal-dark); }
+
+/* Lead form */
+.fields {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  font-size: 0.88rem;
+  margin-bottom: 16px;
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input::placeholder { color: var(--faint); }
+input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-soft); outline: none; }
+
+.error { color: #c0392b; font-size: 0.85rem; margin: 0; }
+
+.privacy {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 14px 0 0;
+}
+
+footer {
+  color: var(--faint);
+  font-size: 0.78rem;
+  margin-top: 56px;
+}
+
+@media (max-width: 640px) {
+  .options { gap: 10px; }
+  .option {
+    flex-basis: calc((100% - 10px) / 2);
+    padding: 14px 10px 12px;
+    font-size: 0.8rem;
+  }
+  .icon-wrap { width: 44px; height: 44px; }
+  .option svg { width: 26px; height: 26px; }
+}
+
+@media (max-width: 560px) {
+  .page { padding-top: 36px; }
+  .subhead { font-size: 1rem; }
+  .quiz { margin-top: 32px; }
+  .hint { font-size: 0.92rem; margin-bottom: 20px; }
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>LOOKING FOR MEDICAL WEIGHT LOSS?</h1>
+      <p class="terms">T+C's Apply</p>
+      <p class="subhead">See what clinician-backed medical weight loss options may suit your needs.</p>
+    </header>
+
+    <section class="quiz" aria-live="polite">
+      <div class="progress">
+        <span id="step-label">QUESTION 1 OF 3</span>
+        <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+      </div>
+
+      <!-- Question steps are rendered from QUESTIONS in the script below -->
+      <div id="questions"></div>
+
+      <form class="step" data-step="contact" id="lead-form" novalidate>
+        <h2>You're <strong>almost there</strong></h2>
+        <p class="hint">Where should we send your next steps?</p>
+        <div class="fields">
+          <label>First Name<input type="text" name="firstName" placeholder="Enter your first name" autocomplete="given-name" required></label>
+          <label>Email Address<input type="email" name="email" placeholder="Enter your best email" autocomplete="email" required></label>
+          <label>Phone Number<input type="tel" name="phone" placeholder="Enter your mobile number" autocomplete="tel" required></label>
+          <p class="error" id="form-error" hidden>Please fill in all fields with valid details.</p>
+        </div>
+        <button type="submit" class="next">See My Options &rarr;</button>
+        <p class="privacy">Your details are kept private and only used to help with your enquiry.</p>
+        <button type="button" class="back">&larr; Back</button>
+      </form>
+
+      <div class="step" data-step="done">
+        <h2>Thanks, <strong>you're all set!</strong></h2>
+        <p class="hint">A member of our team will be in touch shortly to talk through your options.</p>
+      </div>
+    </section>
+
+    <footer>&copy; <span id="year"></span> Keevo. All Rights Reserved.</footer>
+  </main>
+
+  <script>
+(function () {
+  // Line icons: `fill` is the offset soft highlight, `stroke` is the line art (colours set in styles.css).
+  const ICONS = {
+    scale: {
+      fill: '<rect x="18" y="22" width="60" height="56" rx="10"/>',
+      stroke: '<rect x="18" y="22" width="60" height="56" rx="10"/><path d="M34 44 A14 14 0 0 1 62 44 Z"/><path d="M48 44 L54 34"/><path d="M28 78 v5 M68 78 v5"/>',
+    },
+    bolt: {
+      fill: '<path d="M56 14 L28 54 H48 L42 86 L72 42 H52 Z"/>',
+      stroke: '<path d="M56 14 L28 54 H48 L42 86 L72 42 H52 Z"/>',
+    },
+    molecule: {
+      fill: '<circle cx="50" cy="28" r="11"/><circle cx="74" cy="68" r="11"/>',
+      stroke: '<circle cx="50" cy="28" r="11"/><circle cx="26" cy="68" r="11"/><circle cx="74" cy="68" r="11"/><path d="M44 38 L32 58 M56 38 L68 58 M37 68 H63"/>',
+    },
+    dumbbell: {
+      fill: '<rect x="18" y="32" width="12" height="36" rx="3"/><rect x="70" y="32" width="12" height="36" rx="3"/>',
+      stroke: '<path d="M30 50 H70"/><rect x="18" y="32" width="12" height="36" rx="3"/><rect x="70" y="32" width="12" height="36" rx="3"/><rect x="9" y="40" width="9" height="20" rx="2"/><rect x="82" y="40" width="9" height="20" rx="2"/>',
+    },
+    heart: {
+      fill: '<path d="M50 82 C20 62 12 46 20 32 C28 18 46 20 50 34 C54 20 72 18 80 32 C88 46 80 62 50 82 Z"/>',
+      stroke: '<path d="M50 82 C20 62 12 46 20 32 C28 18 46 20 50 34 C54 20 72 18 80 32 C88 46 80 62 50 82 Z"/><path d="M30 38 C31 33 34 30 38 29"/>',
+    },
+    sprout: {
+      fill: '<path d="M50 48 C50 30 62 18 80 18 C80 36 68 48 50 48 Z"/>',
+      stroke: '<path d="M50 86 V46"/><path d="M50 60 C34 60 22 50 22 34 C38 34 50 44 50 60 Z"/><path d="M50 48 C50 30 62 18 80 18 C80 36 68 48 50 48 Z"/><path d="M32 86 H68"/>',
+    },
+    smile: {
+      fill: '<circle cx="46" cy="54" r="28"/>',
+      stroke: '<circle cx="46" cy="54" r="28"/><path d="M36 47 v3 M56 47 v3"/><path d="M34 62 Q46 74 58 62"/><path d="M82 10 V28 M73 19 H91"/>',
+    },
+    sun: {
+      fill: '<circle cx="50" cy="50" r="17"/>',
+      stroke: '<circle cx="50" cy="50" r="17"/><path d="M50 14 V24 M50 76 V86 M14 50 H24 M76 50 H86 M25 25 L32 32 M68 68 L75 75 M25 75 L32 68 M68 32 L75 25"/>',
+    },
+    stopwatch: {
+      fill: '<circle cx="50" cy="56" r="28"/>',
+      stroke: '<circle cx="50" cy="56" r="28"/><path d="M42 16 H58 M50 16 V28"/><path d="M50 56 L61 43"/><path d="M73 30 L79 24"/><path d="M50 36 v4 M70 56 h-4 M50 76 v-4 M30 56 h4"/>',
+    },
+    pulse: {
+      fill: '<path d="M50 82 C20 62 12 46 20 32 C28 18 46 20 50 34 C54 20 72 18 80 32 C88 46 80 62 50 82 Z"/>',
+      stroke: '<path d="M50 82 C20 62 12 46 20 32 C28 18 46 20 50 34 C54 20 72 18 80 32 C88 46 80 62 50 82 Z"/><path d="M8 52 H34 L40 42 L48 62 L55 48 L60 52 H92"/>',
+    },
+    shield: {
+      fill: '<path d="M50 12 L80 23 V47 C80 66 68 78 50 88 C32 78 20 66 20 47 V23 Z"/>',
+      stroke: '<path d="M50 12 L80 23 V47 C80 66 68 78 50 88 C32 78 20 66 20 47 V23 Z"/><path d="M36 50 L46 60 L65 40"/>',
+    },
+    stethoscope: {
+      fill: '<circle cx="76" cy="52" r="10"/>',
+      stroke: '<path d="M28 14 V36 C28 50 36 58 46 58 C56 58 64 50 64 36 V14"/><path d="M23 14 H33 M59 14 H69"/><path d="M46 58 V70 C46 80 54 86 62 86 C70 86 76 80 76 72 V62"/><circle cx="76" cy="52" r="10"/><circle cx="76" cy="52" r="3"/>',
+    },
+    chat: {
+      fill: '<path d="M16 18 H58 A6 6 0 0 1 64 24 V48 A6 6 0 0 1 58 54 H32 L22 64 V54 H16 A6 6 0 0 1 10 48 V24 A6 6 0 0 1 16 18 Z"/>',
+      stroke: '<path d="M16 18 H58 A6 6 0 0 1 64 24 V48 A6 6 0 0 1 58 54 H32 L22 64 V54 H16 A6 6 0 0 1 10 48 V24 A6 6 0 0 1 16 18 Z"/><path d="M72 38 H84 A6 6 0 0 1 90 44 V68 A6 6 0 0 1 84 74 H80 V84 L70 74 H48 A6 6 0 0 1 42 68 V62"/><path d="M26 36 h.01 M37 36 h.01 M48 36 h.01" stroke-width="6"/>',
+    },
+    bulb: {
+      fill: '<path d="M50 12 C34 12 24 24 24 38 C24 50 32 56 36 66 H64 C68 56 76 50 76 38 C76 24 66 12 50 12 Z"/>',
+      stroke: '<path d="M50 12 C34 12 24 24 24 38 C24 50 32 56 36 66 H64 C68 56 76 50 76 38 C76 24 66 12 50 12 Z"/><path d="M38 74 H62 M41 82 H59"/><path d="M43 52 L50 42 L57 52"/>',
+    },
+  };
+
+  const QUESTIONS = [
+    {
+      name: 'improve',
+      title: 'What would you most like to <strong>improve right now?</strong>',
+      options: [
+        ['Lose weight & feel more confident', 'scale'],
+        ['Improve energy & metabolism', 'bolt'],
+        ['Optimise hormones', 'molecule'],
+        ['Build muscle & recover faster', 'dumbbell'],
+        ['Improve sexual health & libido', 'heart'],
+        ['Healthy ageing & overall wellbeing', 'sprout'],
+      ],
+    },
+    {
+      name: 'result',
+      title: 'What result would make the <strong>biggest difference</strong> to you?',
+      options: [
+        ['Look and feel better', 'smile'],
+        ['Have more energy every day', 'sun'],
+        ['Improve my performance & recovery', 'stopwatch'],
+        ['Get my health back on track', 'pulse'],
+        ['Optimise my long-term health', 'shield'],
+      ],
+    },
+    {
+      name: 'approach',
+      title: 'How would you prefer to <strong>approach it?</strong>',
+      options: [
+        ['Explore clinician-supervised treatment options', 'stethoscope'],
+        ['Get professional advice on my options', 'chat'],
+        ["I’m not sure yet — I’d like to learn more", 'bulb'],
+      ],
+    },
+  ];
+
+  const TOTAL = QUESTIONS.length;
+  const container = document.getElementById('questions');
+  const leadForm = document.getElementById('lead-form');
+  const label = document.getElementById('step-label');
+  const bar = document.getElementById('progress-bar');
+  const error = document.getElementById('form-error');
+  const answers = {};
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  function icon(key) {
+    const { fill, stroke } = ICONS[key];
+    return `<svg viewBox="0 0 100 100" aria-hidden="true">
+      <g class="ic-fill" transform="translate(4 4)">${fill}</g>
+      <g class="ic-line">${stroke}</g>
+    </svg>`;
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  }
+
+  container.innerHTML = QUESTIONS.map((q, i) => `
+    <div class="step" data-step="${i + 1}">
+      <h2>${q.title}</h2>
+      <p class="hint">Select your best option.</p>
+      <div class="options" role="group">
+        ${q.options.map(([text, key]) => `
+          <button type="button" class="option" data-name="${q.name}" data-value="${escapeHtml(text)}" aria-pressed="false">
+            <span class="icon-wrap">${icon(key)}</span><span class="label">${escapeHtml(text)}</span>
+          </button>`).join('')}
+      </div>
+      ${i > 0 ? '<button type="button" class="back">&larr; Back</button>' : ''}
+    </div>`).join('');
+
+  const steps = document.querySelectorAll('.quiz .step');
+  const order = [...QUESTIONS.map((_, i) => String(i + 1)), 'contact', 'done'];
+  const quiz = document.querySelector('.quiz');
+  let current = 0;
+  let advancing = false;
+
+  function show(index) {
+    current = index;
+    const key = order[index];
+    steps.forEach((el) => el.classList.toggle('active', el.dataset.step === key));
+
+    if (index < TOTAL) {
+      label.textContent = `QUESTION ${index + 1} OF ${TOTAL}`;
+      bar.style.width = `${(index / TOTAL) * 100}%`;
+    } else {
+      label.textContent = key === 'done' ? 'COMPLETE' : 'LAST STEP';
+      bar.style.width = key === 'done' ? '100%' : '90%';
+    }
+  }
+
+  quiz.addEventListener('click', (e) => {
+    const option = e.target.closest('.option');
+    if (option) {
+      if (advancing) return;
+      const step = option.closest('.step');
+      step.querySelectorAll('.option').forEach((o) => o.setAttribute('aria-pressed', 'false'));
+      option.setAttribute('aria-pressed', 'true');
+      answers[option.dataset.name] = option.dataset.value;
+
+      // Brief pause so the selected state registers before moving on.
+      advancing = true;
+      setTimeout(() => {
+        advancing = false;
+        show(current + 1);
+        if (quiz.getBoundingClientRect().top < 0) quiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 350);
+      return;
+    }
+
+    if (e.target.closest('.back') && !advancing) show(current - 1);
+  });
+
+  leadForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const inputs = leadForm.querySelectorAll('input');
+    const valid = Array.from(inputs).every((i) => i.value.trim() && i.checkValidity());
+    error.hidden = valid;
+    if (!valid) return;
+
+    inputs.forEach((i) => { answers[i.name] = i.value.trim(); });
+
+    // Hook up your CRM / webhook here, e.g.:
+    // fetch('https://your-webhook-url', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(answers) });
+    console.log('Survey submission', answers);
+
+    show(order.indexOf('done'));
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>
