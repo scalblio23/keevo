@@ -183,6 +183,7 @@
     // Hook up your CRM / webhook here, e.g.:
     // fetch('https://your-webhook-url', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(answers) });
     console.log('Survey submission', answers);
+    if (window.fbq) fbq('track', 'Lead');
 
     show(order.indexOf('done'));
   });
