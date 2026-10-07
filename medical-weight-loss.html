@@ -425,6 +425,9 @@ footer {
 
   const TOTAL = QUESTIONS.length;
   const container = document.getElementById('questions');
+  // Make scenario "83 - Keevo - Website Leads" -> CLIENT LEAD LIST, tab "82.5 - Keevo".
+  const LEAD_WEBHOOK = 'https://hook.eu1.make.com/lbogugsbsg3knoh4chfd9nfelimjdplt';
+
   const leadForm = document.getElementById('lead-form');
   const label = document.getElementById('step-label');
   const bar = document.getElementById('progress-bar');
@@ -500,6 +503,25 @@ footer {
     if (e.target.closest('.back') && !advancing) show(current - 1);
   });
 
+  // Form-encoded so the browser sends it without a CORS preflight; keepalive lets it finish if the visitor leaves.
+  function sendLead() {
+    const params = new URLSearchParams(window.location.search);
+    const lead = new URLSearchParams({
+      firstName: answers.firstName || '',
+      email: answers.email || '',
+      phone: answers.phone || '',
+      q1: answers.improve || '',
+      q2: answers.result || '',
+      q3: answers.approach || '',
+      submissionId: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2),
+      submittedAt: new Date().toISOString(),
+      pageUrl: window.location.href,
+      source: params.get('utm_source') || document.referrer || 'direct',
+    });
+    fetch(LEAD_WEBHOOK, { method: 'POST', body: lead, keepalive: true, mode: 'no-cors' })
+      .catch((err) => console.error('Lead submission failed', err));
+  }
+
   leadForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const inputs = leadForm.querySelectorAll('input');
@@ -509,9 +531,7 @@ footer {
 
     inputs.forEach((i) => { answers[i.name] = i.value.trim(); });
 
-    // Hook up your CRM / webhook here, e.g.:
-    // fetch('https://your-webhook-url', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(answers) });
-    console.log('Survey submission', answers);
+    sendLead();
 
     show(order.indexOf('done'));
   });
