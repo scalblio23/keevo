@@ -203,6 +203,17 @@
     inputs.forEach((i) => { answers[i.name] = i.value.trim(); });
 
     sendLead();
+    if (window.fbq) fbq('track', 'Lead');
+
+    // Pre-fill the booking widget with the lead's contact details
+    const booking = document.querySelector('.booking');
+    if (booking) {
+      const url = new URL(booking.src);
+      url.searchParams.set('name', answers.firstName);
+      url.searchParams.set('email', answers.email);
+      url.searchParams.set('phone', answers.phone);
+      booking.src = url.toString();
+    }
 
     show(order.indexOf('done'));
   });
