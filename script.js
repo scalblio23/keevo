@@ -57,6 +57,14 @@
       fill: '<path d="M50 12 C34 12 24 24 24 38 C24 50 32 56 36 66 H64 C68 56 76 50 76 38 C76 24 66 12 50 12 Z"/>',
       stroke: '<path d="M50 12 C34 12 24 24 24 38 C24 50 32 56 36 66 H64 C68 56 76 50 76 38 C76 24 66 12 50 12 Z"/><path d="M38 74 H62 M41 82 H59"/><path d="M43 52 L50 42 L57 52"/>',
     },
+    tick: {
+      fill: '<circle cx="50" cy="50" r="34"/>',
+      stroke: '<circle cx="50" cy="50" r="34"/><path d="M34 51 L45 62 L67 39"/>',
+    },
+    cross: {
+      fill: '<circle cx="50" cy="50" r="34"/>',
+      stroke: '<circle cx="50" cy="50" r="34"/><path d="M37 37 L63 63 M63 37 L37 63"/>',
+    },
   };
 
   const QUESTIONS = [
@@ -92,6 +100,21 @@
         ["I’m not sure yet — I’d like to learn more", 'bulb'],
       ],
     },
+    {
+      name: 'ageGroup',
+      title: 'What is your <strong>age group?</strong>',
+      // Age cards show the range itself in the circle instead of an icon.
+      badges: true,
+      options: [['20–30'], ['30–40'], ['40–50'], ['50–60'], ['60+']],
+    },
+    {
+      name: 'medicareAcknowledged',
+      title: 'Medical weight loss is <strong>privately billed</strong> and not applicable for Medicare rebates. Please confirm you understand this.',
+      options: [
+        ['Yes', 'tick'],
+        ['No', 'cross'],
+      ],
+    },
   ];
 
   const TOTAL = QUESTIONS.length;
@@ -123,7 +146,9 @@
       <div class="options" role="group">
         ${q.options.map(([text, key]) => `
           <button type="button" class="option" data-name="${q.name}" data-value="${escapeHtml(text)}" aria-pressed="false">
-            <span class="icon-wrap">${icon(key)}</span><span class="label">${escapeHtml(text)}</span>
+            ${q.badges
+              ? `<span class="icon-wrap badge">${escapeHtml(text)}</span><span class="label">years</span>`
+              : `<span class="icon-wrap">${icon(key)}</span><span class="label">${escapeHtml(text)}</span>`}
           </button>`).join('')}
       </div>
       ${i > 0 ? '<button type="button" class="back">&larr; Back</button>' : ''}

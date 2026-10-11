@@ -142,6 +142,8 @@ body {
 }
 
 .option svg { width: 30px; height: 30px; }
+.icon-wrap.badge { font-size: 0.82rem; font-weight: 600; color: var(--teal-dark); white-space: nowrap; transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+.option[aria-pressed="true"] .icon-wrap.badge { color: #ffffff; }
 .ic-fill { fill: #ffffff; stroke: none; opacity: 0.85; }
 .ic-line { fill: none; stroke: var(--teal-dark); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s ease; }
 
@@ -265,6 +267,7 @@ footer {
   }
   .icon-wrap { width: 44px; height: 44px; }
   .option svg { width: 26px; height: 26px; }
+  .icon-wrap.badge { font-size: 0.74rem; }
 }
 
 @media (max-width: 560px) {
