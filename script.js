@@ -105,7 +105,7 @@
       title: 'What is your <strong>age group?</strong>',
       // Age cards show the range itself in the circle instead of an icon.
       badges: true,
-      options: [['20–30'], ['30–40'], ['40–50'], ['50–60'], ['60+']],
+      options: [['18–30'], ['30–40'], ['40–55'], ['55+', null, true]],
     },
     {
       name: 'medicareAcknowledged',
@@ -144,8 +144,8 @@
       <h2>${q.title}</h2>
       <p class="hint">Select your best option.</p>
       <div class="options" role="group">
-        ${q.options.map(([text, key]) => `
-          <button type="button" class="option" data-name="${q.name}" data-value="${escapeHtml(text)}" aria-pressed="false">
+        ${q.options.map(([text, key, disqualify]) => `
+          <button type="button" class="option" data-name="${q.name}" data-value="${escapeHtml(text)}"${disqualify ? ' data-disqualify' : ''} aria-pressed="false">
             ${q.badges
               ? `<span class="icon-wrap badge">${escapeHtml(text)}</span><span class="label">years</span>`
               : `<span class="icon-wrap">${icon(key)}</span><span class="label">${escapeHtml(text)}</span>`}
@@ -155,10 +155,11 @@
     </div>`).join('');
 
   const steps = document.querySelectorAll('.quiz .step');
-  const order = [...QUESTIONS.map((_, i) => String(i + 1)), 'contact', 'done'];
+  const order = [...QUESTIONS.map((_, i) => String(i + 1)), 'contact', 'done', 'ineligible'];
   const quiz = document.querySelector('.quiz');
   let current = 0;
   let advancing = false;
+  let disqualifiedFrom = null;
 
   function show(index) {
     current = index;
@@ -169,8 +170,9 @@
       label.textContent = `QUESTION ${index + 1} OF ${TOTAL}`;
       bar.style.width = `${(index / TOTAL) * 100}%`;
     } else {
-      label.textContent = key === 'done' ? 'COMPLETE' : 'LAST STEP';
-      bar.style.width = key === 'done' ? '100%' : '90%';
+      const finished = key === 'done' || key === 'ineligible';
+      label.textContent = finished ? 'COMPLETE' : 'LAST STEP';
+      bar.style.width = finished ? '100%' : '90%';
     }
   }
 
@@ -187,13 +189,20 @@
       advancing = true;
       setTimeout(() => {
         advancing = false;
-        show(current + 1);
+        if (option.hasAttribute('data-disqualify')) {
+          disqualifiedFrom = current;
+          show(order.indexOf('ineligible'));
+        } else {
+          show(current + 1);
+        }
         if (quiz.getBoundingClientRect().top < 0) quiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 350);
       return;
     }
 
-    if (e.target.closest('.back') && !advancing) show(current - 1);
+    if (e.target.closest('.back') && !advancing) {
+      show(order[current] === 'ineligible' ? disqualifiedFrom : current - 1);
+    }
   });
 
   leadForm.addEventListener('submit', (e) => {
