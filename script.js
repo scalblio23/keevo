@@ -109,7 +109,7 @@
     },
     {
       name: 'medicareAcknowledged',
-      title: 'Medical weight loss is <strong>privately billed</strong> and not applicable for Medicare rebates. Please confirm you understand this.',
+      title: 'Practitioner consultations and treatments are <strong>privately billed</strong>, with no Medicare rebate, is that ok?',
       options: [
         ['Yes', 'tick'],
         ['No', 'cross'],
